@@ -13,6 +13,13 @@ import java.util.Scanner;
  * Deals with loading tasks from the file and saving tasks in the file.
  */
 public class Storage {
+    /**
+     * Enumerate task type options
+     */
+    private static final String ADD_TYPE_TODO = "todo";
+    private static final String ADD_TYPE_DEADLINE = "deadline";
+    private static final String ADD_TYPE_EVENT = "event";
+
     private PrintWriter writer;
     /**
      * Directory location for file storage and retrieval.
@@ -47,7 +54,7 @@ public class Storage {
             char taskType = inputArr[0].charAt(1);
             boolean isTaskComplete = (inputArr[1].equals("[\u2713]")) ? true : false;
             if (taskType == 'T') {
-                tasklist.add(new Task(inputArr[2], "todo", isTaskComplete));
+                tasklist.add(new Task(inputArr[2], ADD_TYPE_TODO, isTaskComplete));
             } else if (taskType == 'D') {
                 String deadlineDetails = inputArr[2].split("\\(")[0];
                 String deadline = inputArr[2].split("\\(")[1].split(" ", 2)[1];
@@ -56,7 +63,7 @@ public class Storage {
                 assert deadline.split("/")[2].split(" ")[0].length() == 2 : "Year is incorrect";
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm)");
                 LocalDateTime deadlineByDateTime = LocalDateTime.parse(deadline, formatter);
-                tasklist.add(new Task(deadlineDetails, "deadline", deadlineByDateTime, isTaskComplete));
+                tasklist.add(new Task(deadlineDetails, ADD_TYPE_DEADLINE, deadlineByDateTime, isTaskComplete));
             } else {
                 String eventDetails = inputArr[2].split("\\(")[0];
                 String eventDateTime = inputArr[2].split("\\(")[1].split(" ", 2)[1];
@@ -64,7 +71,7 @@ public class Storage {
                 assert eventDateTime.split("/")[1].length() == 2 : "Month is incorrect";
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm)");
                 LocalDateTime eventDateTimeByDateTime = LocalDateTime.parse(eventDateTime, formatter);
-                tasklist.add(new Task(eventDetails, "event", eventDateTimeByDateTime, isTaskComplete));
+                tasklist.add(new Task(eventDetails, ADD_TYPE_EVENT, eventDateTimeByDateTime, isTaskComplete));
             }
         }
         return tasklist;

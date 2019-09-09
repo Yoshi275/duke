@@ -1,6 +1,3 @@
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-
 /**
  * Handles completion of tasks upon user input eg. "done 2"
  */

@@ -7,6 +7,12 @@ import java.util.ArrayList;
  */
 public class TaskList {
     /**
+     * Enumerate relevant task type options
+     */
+    private static final String ADD_TYPE_DEADLINE = "deadline";
+    private static final String ADD_TYPE_EVENT = "event";
+
+    /**
      * ArrayList for tracking Tasks on the list.
      */
     private ArrayList<Task> list;
@@ -73,7 +79,7 @@ public class TaskList {
     public void addDateTask(String details, String dateTime, String taskType) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         LocalDateTime dateTimeByDateTime = LocalDateTime.parse(dateTime, formatter);
-        assert taskType.equals("event") || taskType.equals("deadline") : "Wrong task type";
+        assert taskType.equals(ADD_TYPE_EVENT) || taskType.equals(ADD_TYPE_DEADLINE) : "Wrong task type";
         addTask(new Task(details, taskType, dateTimeByDateTime, false));
     }
 

@@ -6,6 +6,13 @@ import java.time.format.DateTimeFormatter;
  */
 public class Task {
     /**
+     * Enumerate task type options
+     */
+    private static final String ADD_TYPE_TODO = "todo";
+    private static final String ADD_TYPE_DEADLINE = "deadline";
+    private static final String ADD_TYPE_EVENT = "event";
+
+    /**
      * Description of task details.
      */
     protected String description;
@@ -69,11 +76,11 @@ public class Task {
      * @return Task type
      */
     public String getTaskType() {
-        if (taskType.equals("todo")) {
+        if (taskType.equals(ADD_TYPE_TODO)) {
             return "[T]";
-        } else if (taskType.equals("deadline")) {
+        } else if (taskType.equals(ADD_TYPE_DEADLINE)) {
             return "[D]";
-        } else if (taskType.equals("event")) {
+        } else if (taskType.equals(ADD_TYPE_EVENT)) {
             return "[E]";
         } else {
             return "";
@@ -97,12 +104,12 @@ public class Task {
     
     @Override
     public String toString() {
-        assert taskType.equals("deadline") || taskType.equals("event") || taskType.equals("todo")
+        assert taskType.equals(ADD_TYPE_DEADLINE) || taskType.equals(ADD_TYPE_EVENT) || taskType.equals(ADD_TYPE_TODO)
                 : "Task type is invalid.";
         String stringToPrint = getTaskType() + " " + getStatusIcon() + " " + getDescription();
-        if (taskType.equals("deadline")) {
+        if (taskType.equals(ADD_TYPE_DEADLINE)) {
             return stringToPrint + " (by: " + getDateTime() + ")";
-        } else if (taskType.equals("event")) {
+        } else if (taskType.equals(ADD_TYPE_EVENT)) {
             return stringToPrint + " (at: " + getDateTime() + ")";
         } else {
             return stringToPrint;
