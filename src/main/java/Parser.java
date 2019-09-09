@@ -8,6 +8,16 @@ public class Parser {
     private String[] inputArr;
 
     /**
+     * Restrict all valid command options
+     */
+    private static final String BYE_COMMAND = "bye";
+    private static final String LIST_COMMAND = "list";
+    private static final String DONE_COMMAND = "done";
+    private static final String DELETE_COMMAND = "delete";
+    private static final String FIND_COMMAND = "find";
+    private static final String ADD_COMMAND = "add";
+
+    /**
      * Constructor for splitting input into main command and command details.
      * @param input original user input string
      */
@@ -51,18 +61,20 @@ public class Parser {
      * @return Commands which execute relevant actions to follow user commands
      */
     public static Command parse(String command, String commandDetails, String indent) {
-        if (command.equals("bye")) {
+        if (command.equals(BYE_COMMAND)) {
             return new ExitCommand(command, commandDetails, indent);
-        } else if (command.equals("list")) {
+        } else if (command.equals(LIST_COMMAND)) {
             return new ListCommand(command, commandDetails, indent);
-        } else if (command.equals("done")) {
+        } else if (command.equals(DONE_COMMAND)) {
             return new DoneCommand(command, commandDetails, indent);
-        } else if (command.equals("delete")) {
+        } else if (command.equals(DELETE_COMMAND)) {
             return new DeleteCommand(command, commandDetails, indent);
-        } else if (command.equals("find")) {
+        } else if (command.equals(FIND_COMMAND)) {
             return new FindCommand(command, commandDetails, indent);
-        } else {
+        } else if (command.equals(ADD_COMMAND)) {
             return new AddCommand(command, commandDetails, indent);
+        } else {
+            return new InvalidCommand(command, commandDetails, indent);
         }
     }
 }
