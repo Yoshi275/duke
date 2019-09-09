@@ -22,8 +22,6 @@ public class Storage {
     /**
      * Constructor for new Storage object with directory information loaded.
      * @param filename Location for loaded/new file
-     * @throws FileNotFoundException File directory cannot be located
-     * @throws UnsupportedEncodingException File type is not supported
      */
     public Storage(String filename) {
         this.filename = filename;
@@ -36,6 +34,7 @@ public class Storage {
      */
     public ArrayList<Task> load() throws FileNotFoundException {
         ArrayList<Task> tasklist = new ArrayList<>();
+        assert tasklist.size() == 0 : "Initialised ArrayList is not empty.";
         File f = new File(filename);
         Scanner scanner = new Scanner(f);
 
@@ -52,12 +51,17 @@ public class Storage {
             } else if (taskType == 'D') {
                 String deadlineDetails = inputArr[2].split("\\(")[0];
                 String deadline = inputArr[2].split("\\(")[1].split(" ", 2)[1];
+                assert deadline.split("/")[0].length() == 2 : "Day is incorrect";
+                assert deadline.split("/")[1].length() == 2 : "Month is incorrect";
+                assert deadline.split("/")[2].split(" ")[0].length() == 2 : "Year is incorrect";
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm)");
                 LocalDateTime deadlineByDateTime = LocalDateTime.parse(deadline, formatter);
                 tasklist.add(new Task(deadlineDetails, "deadline", deadlineByDateTime, isTaskComplete));
             } else {
                 String eventDetails = inputArr[2].split("\\(")[0];
                 String eventDateTime = inputArr[2].split("\\(")[1].split(" ", 2)[1];
+                assert eventDateTime.split("/")[0].length() == 2 : "Day is incorrect";
+                assert eventDateTime.split("/")[1].length() == 2 : "Month is incorrect";
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm)");
                 LocalDateTime eventDateTimeByDateTime = LocalDateTime.parse(eventDateTime, formatter);
                 tasklist.add(new Task(eventDetails, "event", eventDateTimeByDateTime, isTaskComplete));

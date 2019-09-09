@@ -73,6 +73,7 @@ public class TaskList {
     public void addDateTask(String details, String dateTime, String taskType) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         LocalDateTime dateTimeByDateTime = LocalDateTime.parse(dateTime, formatter);
+        assert taskType.equals("event") || taskType.equals("deadline") : "Wrong task type";
         addTask(new Task(details, taskType, dateTimeByDateTime, false));
     }
 

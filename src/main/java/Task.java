@@ -97,6 +97,8 @@ public class Task {
     
     @Override
     public String toString() {
+        assert taskType.equals("deadline") || taskType.equals("event") || taskType.equals("todo")
+                : "Task type is invalid.";
         String stringToPrint = getTaskType() + " " + getStatusIcon() + " " + getDescription();
         if (taskType.equals("deadline")) {
             return stringToPrint + " (by: " + getDateTime() + ")";

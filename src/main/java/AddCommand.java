@@ -28,6 +28,8 @@ public class AddCommand extends Command {
                 if (!(commandDetails.equals(" ") || commandDetails.equals(""))) {
                     if (command.equals("todo")) {
                         tasks.addTask(new Task(commandDetails, "todo", false));
+                        assert tasks.getList().get(tasks.getList().size() -1).getTaskType().equals("[T]")
+                                : "To-do task not added";
                         response = ui.printResponse(befTaskAddMessage
                                 + tasks.getList().get(tasks.getList().size() - 1) + "\n " + indent
                                 + aftTaskAddMessage);
@@ -36,6 +38,8 @@ public class AddCommand extends Command {
                         try {
                             tasks.addDateTask(commandDetails.split(" /by ")[0],
                                     commandDetails.split(" /by ")[1], "deadline");
+                            assert tasks.getList().get(tasks.getList().size() -1).getTaskType().equals("[D]")
+                                    : "Deadline task not added";
                             response = ui.printResponse(befTaskAddMessage
                                     + tasks.getList().get(tasks.getList().size() - 1) + "\n " + indent
                                     + aftTaskAddMessage);
@@ -43,12 +47,13 @@ public class AddCommand extends Command {
                         } catch (Exception ex) {
                             response = ui.printError("☹ OOPS!!! Deadlines require a specific datetime "
                                     + "after /by, in format 'dd/MM/yyyy HHmm'");
-                            System.out.println(ex);
                         }
                     } else if (command.equals("event")) {
                         try {
                             tasks.addDateTask(commandDetails.split(" /at ")[0],
                                     commandDetails.split(" /at ")[1], "event");
+                            assert tasks.getList().get(tasks.getList().size() - 1).getTaskType().equals("[E]")
+                                    : "Event task not added";
                             response = ui.printResponse(befTaskAddMessage
                                     + tasks.getList().get(tasks.getList().size() - 1) + "\n " + indent
                                     + aftTaskAddMessage);
